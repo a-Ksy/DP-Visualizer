@@ -8,6 +8,14 @@ cors = CORS(app)
 api = Api(app)
 
 
+class GetColumns(Resource):
+    def __init__(self):
+        self.columns = dp.get_column_names()
+    
+    def get(self):
+        return self.columns, 200
+
+
 class GetCountOfAttribute(Resource):
     def __init__(self):
         self.columns = dp.get_column_names()
@@ -22,7 +30,7 @@ class GetCountOfAttribute(Resource):
 
         result = dp.get_noisy_count_of_attr(args['attr'])
 
-        return result, 200
+        return {"columns":result}, 200
 
 
 class GetCountOfAttributeWithCondition(Resource):
@@ -44,6 +52,7 @@ class GetCountOfAttributeWithCondition(Resource):
         return result, 200
 
 
+api.add_resource(GetColumns, '/getColumns')
 api.add_resource(GetCountOfAttribute, '/getCount')
 api.add_resource(GetCountOfAttributeWithCondition, '/getCountWithCondition')
 
