@@ -52,9 +52,9 @@ class GetCountOfAttributeWithCondition(Resource):
         return result, 200
 
 
-api.add_resource(GetColumns, '/getColumns')
-api.add_resource(GetCountOfAttribute, '/getCount')
-api.add_resource(GetCountOfAttributeWithCondition, '/getCountWithCondition')
+api.add_resource(GetColumns, '/columns')
+api.add_resource(GetCountOfAttribute, '/count')
+api.add_resource(GetCountOfAttributeWithCondition, '/countWithCondition')
 
 
 if __name__ == '__main__':

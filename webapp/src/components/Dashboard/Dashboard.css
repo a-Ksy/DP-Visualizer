@@ -1,0 +1,22 @@
+.Dashboard {
+  height: 100vh;
+}
+
+.LandingMessage {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.emphasized {
+  background: linear-gradient(to right, #fdfbfb, #6146ea1f 70%);
+}
+
+.DashboardElements {
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
