@@ -1,0 +1,4 @@
+- Currently, histogram is not well-distributed. Send axis ticks and min, max values for better visualization.
+- dob and dod values should be parsed into age values.
+- We can have multiple db's and let the user choose which to display
+- Webapp should also let the user choose multiple columns and values.
