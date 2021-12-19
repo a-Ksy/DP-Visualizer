@@ -15,7 +15,7 @@ def _noisify_result(attr_name, count_dict):
     result = []
     result.append([attr_name, "Count"])
     for i, k in enumerate(count_dict.keys()):
-        result.append([k, noisy_result[i]])
+        result.append([k if k != "" else "not specified", noisy_result[i]])
     
     return result
 

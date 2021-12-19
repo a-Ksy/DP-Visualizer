@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import Attribute from "../Atribute/Attribute";
 import { connect } from "react-redux";
-import { getColumns } from "../../store/data";
+import { getColumns, getCountOfColumn } from "../../store/data";
 import "./Settings.css";
 import Button from "../Button/Button";
+import { useState } from "react";
 
 const Settings = (props) => {
-  const { retrieveColumns, columns, type } = props;
+  const { retrieveColumns, retrieveCountOfColumn, columns, type } = props;
   useEffect(() => retrieveColumns(), []);
+  const [selectedColumn, setSelectedColumn] = useState(null);
 
   if (type === "landing") {
     return (
@@ -15,7 +17,7 @@ const Settings = (props) => {
         <p>Select a column to begin:</p>
         <div className="row">
           {columns?.map((column) => (
-            <Attribute text={column} />
+            <Attribute text={column} setSelectedColumn={setSelectedColumn} />
           ))}
         </div>
       </div>
@@ -29,13 +31,20 @@ const Settings = (props) => {
           <label for="columnSelection" class="form-label">
             Select a column
           </label>
-          <select id="columnSelection" class="form-select">
+          <select
+            id="columnSelection"
+            class="form-select"
+            onChange={(e) => setSelectedColumn(e.target.value)}
+            value={selectedColumn}
+          >
             {columns?.map((column) => (
-              <option>{column} </option>
+              <option value={column}>{column} </option>
             ))}
           </select>
         </div>
-        <Button>Submit</Button>
+        <Button onClick={() => retrieveCountOfColumn(selectedColumn)}>
+          Submit
+        </Button>
       </div>
     </div>
   );
@@ -47,6 +56,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   retrieveColumns: () => dispatch(getColumns()),
+  retrieveCountOfColumn: (column) => dispatch(getCountOfColumn(column)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

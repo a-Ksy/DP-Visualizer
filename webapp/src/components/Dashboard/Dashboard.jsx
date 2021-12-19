@@ -30,17 +30,15 @@ const Dashboard = (props) => {
           <Chart
             width={"80vw"}
             height={"60vh"}
-            chartType="BarChart"
+            chartType="Histogram"
             loader={<div>Loading Chart</div>}
             data={counts}
             options={{
               hAxis: {
                 title: "Total Count",
-                minValue: 0,
               },
               vAxis: {
                 title: counts[0][0],
-                minValue: 0,
               },
             }}
           />

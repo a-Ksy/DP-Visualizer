@@ -3,9 +3,16 @@ import { connect } from "react-redux";
 import { getCountOfColumn } from "../../store/data";
 
 const Attribute = (props) => {
-  const { text, retrieveCountOfColumn } = props;
+  const { text, setSelectedColumn, retrieveCountOfColumn } = props;
+
+  const retrieveCount = () => {
+    retrieveCountOfColumn(text);
+    console.log("setselectedcolumn to", text);
+    setSelectedColumn(text);
+  };
+
   return (
-    <div className="Attribute" onClick={() => retrieveCountOfColumn(text)}>
+    <div className="Attribute" onClick={() => retrieveCount()}>
       {text}
     </div>
   );
