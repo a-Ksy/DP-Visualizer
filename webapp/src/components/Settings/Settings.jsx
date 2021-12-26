@@ -1,50 +1,92 @@
 import { useEffect } from "react";
-import Attribute from "../Atribute/Attribute";
 import { connect } from "react-redux";
-import { getColumns, getCountOfColumn } from "../../store/data";
+import { getColumnValues, getCountOfColumn } from "../../store/data";
 import "./Settings.css";
 import Button from "../Button/Button";
 import { useState } from "react";
 
 const Settings = (props) => {
-  const { retrieveColumns, retrieveCountOfColumn, columns, type } = props;
-  useEffect(() => retrieveColumns(), []);
-  const [selectedColumn, setSelectedColumn] = useState(null);
+  const {
+    retrieveColumnValues,
+    retrieveCountOfColumn,
+    columns,
+    columnValues,
+    firstColumn,
+    setFirstColumn,
+  } = props;
+  const [showSecondaryColumn, setShowSecondaryColumn] = useState(false);
 
-  if (type === "landing") {
-    return (
-      <div className="InitialSettings">
-        <p>Select a column to begin:</p>
-        <div className="row">
-          {columns?.map((column) => (
-            <Attribute text={column} setSelectedColumn={setSelectedColumn} />
-          ))}
-        </div>
-      </div>
-    );
+  useEffect(() => retrieveCountOfColumn(firstColumn), [firstColumn]);
+  useEffect(() => retrieveColumnValues(firstColumn), [firstColumn]);
+  let secondaryColumnOptions = null;
+
+  if (showSecondaryColumn) {
+    secondaryColumnOptions = columns.filter((column) => column !== firstColumn);
   }
+
+  const secondaryColumn = (
+    <div className="d-flex justify-content-start">
+      <div>
+        <label for="columnSelection" class="form-label">
+          Select a/an {firstColumn} value
+        </label>
+        <select id="columnSelection" class="form-select">
+          {columnValues?.map((column) => (
+            <option value={column}>{column}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label for="columnSelection" class="form-label">
+          Select a secondary column
+        </label>
+        <select id="columnSelection" class="form-select">
+          {secondaryColumnOptions?.map((column) => (
+            <option value={column}>{column}</option>
+          ))}
+        </select>
+      </div>
+      <Button
+        type="transparent"
+        size="sm"
+        onClick={() => setShowSecondaryColumn(false)}
+      >
+        Remove secondary column
+      </Button>
+    </div>
+  );
 
   return (
     <div className="Settings">
       <div className="d-flex justify-content-start">
-        <div className="form">
-          <label for="columnSelection" class="form-label">
-            Select a column
-          </label>
-          <select
-            id="columnSelection"
-            class="form-select"
-            onChange={(e) => setSelectedColumn(e.target.value)}
-            value={selectedColumn}
-          >
-            {columns?.map((column) => (
-              <option value={column}>{column} </option>
-            ))}
-          </select>
+        <div className="form d-flex justify-content-start">
+          <div>
+            <label for="columnSelection" class="form-label">
+              Select a column
+            </label>
+            <select
+              id="columnSelection"
+              class="form-select"
+              onChange={(e) => setFirstColumn(e.target.value)}
+              value={firstColumn}
+            >
+              {columns?.map((column) => (
+                <option value={column}>{column} </option>
+              ))}
+            </select>
+          </div>
+          {showSecondaryColumn ? (
+            secondaryColumn
+          ) : (
+            <Button
+              type="transparent"
+              size="sm"
+              onClick={() => setShowSecondaryColumn(true)}
+            >
+              Add a secondary column
+            </Button>
+          )}
         </div>
-        <Button onClick={() => retrieveCountOfColumn(selectedColumn)}>
-          Submit
-        </Button>
       </div>
     </div>
   );
@@ -52,10 +94,11 @@ const Settings = (props) => {
 
 const mapStateToProps = (state) => ({
   columns: state.data.columns,
+  columnValues: state.data.columnValues,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  retrieveColumns: () => dispatch(getColumns()),
+  retrieveColumnValues: (column) => dispatch(getColumnValues(column)),
   retrieveCountOfColumn: (column) => dispatch(getCountOfColumn(column)),
 });
 

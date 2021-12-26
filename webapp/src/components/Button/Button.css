@@ -3,7 +3,6 @@
   color: rgb(255, 255, 254);
   opacity: 0.8;
   transform-style: preserve-3d;
-  margin-top: 2.5rem;
   padding: 0.25rem 1.5rem;
   border-radius: 3px;
   font-size: 1rem;
@@ -12,9 +11,20 @@
   border: none;
   transition: 0.3s ease;
   width: fit-content;
+  margin: 2.5rem 0.5rem 0 0.5rem;
 }
 
 .btn-primary:hover {
   background-color: rgb(98, 70, 234);
   opacity: 1;
+}
+
+.Button.transparent {
+  background-color: transparent;
+  color: #2b2c34;
+}
+
+.Button.sm {
+  font-size: 0.8rem;
+  padding: 0 0.5rem 0 0.5rem;
 }

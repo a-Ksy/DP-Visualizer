@@ -9,6 +9,13 @@ def get_column_names():
     return db.get_column_names()
 
 
+def get_column_values(attr_name):
+    """
+    Returns all the values of the column    
+    """
+    return db.get_attr_values_from_name(attr_name)
+
+
 def get_noisy_count_of_attr(attr_name):
     """
     Returns the noisy count histogram of the given attribute

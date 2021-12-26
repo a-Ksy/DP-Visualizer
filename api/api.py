@@ -33,6 +33,23 @@ class GetCountOfAttribute(Resource):
         return result, 200
 
 
+class GetColumnValues(Resource):
+    def __init__(self):
+        self.columns = dp.get_column_names()
+
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('attr', type=str, help="Missing 'attr' field")
+        args = parser.parse_args()
+
+        if args['attr'] not in self.columns:
+            return f"Attribute {args['attr']} is not found", 404
+
+        result = dp.get_column_values(args['attr'])
+
+        return result, 200
+
+
 class GetCountOfAttributeWithCondition(Resource):
     def __init__(self):
         self.columns = dp.get_column_names()
@@ -54,6 +71,7 @@ class GetCountOfAttributeWithCondition(Resource):
 
 api.add_resource(GetColumns, '/columns')
 api.add_resource(GetCountOfAttribute, '/count')
+api.add_resource(GetColumnValues, '/columnValues')
 api.add_resource(GetCountOfAttributeWithCondition, '/countWithCondition')
 
 

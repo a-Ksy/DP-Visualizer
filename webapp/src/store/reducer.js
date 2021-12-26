@@ -15,6 +15,8 @@ const dataReducer = (state = initialState, action) => {
       return updateObject(state, { loading: false });
     case actionTypes.SET_COLUMNS:
       return updateObject(state, { columns: action.payload });
+    case actionTypes.SET_COLUMN_VALUES:
+      return updateObject(state, { columnValues: action.payload });
     case actionTypes.SET_COUNTS:
       return updateObject(state, { histogram: action.payload });
     default:

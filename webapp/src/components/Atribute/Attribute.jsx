@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import { getCountOfColumn } from "../../store/data";
 
 const Attribute = (props) => {
-  const { text, setSelectedColumn, retrieveCountOfColumn } = props;
+  const { text, setFirstColumn, retrieveCountOfColumn } = props;
 
   const retrieveCount = () => {
+    setFirstColumn(text);
     retrieveCountOfColumn(text);
-    console.log("setselectedcolumn to", text);
-    setSelectedColumn(text);
   };
 
   return (

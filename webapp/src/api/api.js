@@ -25,3 +25,17 @@ export const apiGetCountOfColumn = async (column, callback, onError) => {
     onError
   );
 };
+
+export const apiGetColumnValues = async (column, callback, onError) => {
+  const params = { attr: column };
+
+  return apiCall(
+    `${BASE_URL}/columnValues`,
+    methods.GET,
+    params,
+    null,
+    null,
+    callback,
+    onError
+  );
+};

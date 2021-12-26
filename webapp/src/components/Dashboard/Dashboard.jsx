@@ -2,9 +2,14 @@ import Settings from "../Settings/Settings";
 import "./Dashboard.css";
 import { connect } from "react-redux";
 import { Chart } from "react-google-charts";
+import { getColumns } from "../../store/data";
+import Attribute from "../Atribute/Attribute";
+import { useState } from "react";
 
 const Dashboard = (props) => {
-  const { histogram } = props;
+  const { histogram, columns } = props;
+
+  const [firstColumn, setFirstColumn] = useState(null);
 
   if (histogram === undefined || histogram === null) {
     return (
@@ -17,7 +22,14 @@ const Dashboard = (props) => {
             </p>
           </div>
           <div className="row">
-            <Settings type="landing" />
+            <div className="InitialSettings">
+              <p>Select a column to begin:</p>
+              <div className="row">
+                {columns?.map((column) => (
+                  <Attribute text={column} setFirstColumn={setFirstColumn} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,7 +40,11 @@ const Dashboard = (props) => {
     return (
       <div className="Dashboard">
         <div className="row">
-          <Settings type="dashboard" />
+          <Settings
+            type="dashboard"
+            setFirstColumn={setFirstColumn}
+            firstColumn={firstColumn}
+          />
           <Chart
             width={"80vw"}
             height={"60vh"}
@@ -53,8 +69,11 @@ const Dashboard = (props) => {
 
 const mapStateToProps = (state) => ({
   histogram: state.data.histogram,
+  columns: state.data.columns,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  retrieveColumns: () => dispatch(getColumns()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
