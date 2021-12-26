@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { Chart } from "react-google-charts";
 
 const Dashboard = (props) => {
-  const { counts } = props;
+  const { histogram } = props;
 
-  if (counts === undefined || counts === null) {
+  if (histogram === undefined || histogram === null) {
     return (
       <div className="Dashboard">
         <div className="DashboardElements">
@@ -23,6 +23,8 @@ const Dashboard = (props) => {
       </div>
     );
   } else {
+    const { data, options } = histogram;
+
     return (
       <div className="Dashboard">
         <div className="row">
@@ -32,13 +34,14 @@ const Dashboard = (props) => {
             height={"60vh"}
             chartType="Histogram"
             loader={<div>Loading Chart</div>}
-            data={counts}
+            data={data}
             options={{
               hAxis: {
                 title: "Total Count",
+                ticks: options["x_ticks"],
               },
               vAxis: {
-                title: counts[0][0],
+                title: data[0][0],
               },
             }}
           />
@@ -49,7 +52,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  counts: state.data.counts,
+  histogram: state.data.histogram,
 });
 
 const mapDispatchToProps = (dispatch) => ({});

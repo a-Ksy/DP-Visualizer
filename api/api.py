@@ -30,7 +30,7 @@ class GetCountOfAttribute(Resource):
 
         result = dp.get_noisy_count_of_attr(args['attr'])
 
-        return {"columns":result}, 200
+        return result, 200
 
 
 class GetCountOfAttributeWithCondition(Resource):
