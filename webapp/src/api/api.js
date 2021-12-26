@@ -39,3 +39,17 @@ export const apiGetColumnValues = async (column, callback, onError) => {
     onError
   );
 };
+
+export const apiGetCountOfColumnWithCondition = async (column1, column1Val, column2, callback, onError) => {
+  const params = { attr1: column1, attr1_val: column1Val, attr2: column2};
+
+  return apiCall(
+    `${BASE_URL}/countWithCondition`,
+    methods.GET,
+    params,
+    null,
+    null,
+    callback,
+    onError
+  );
+};

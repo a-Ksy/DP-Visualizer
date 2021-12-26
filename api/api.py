@@ -64,7 +64,7 @@ class GetCountOfAttributeWithCondition(Resource):
         if args['attr1'] not in self.columns or args['attr2'] not in self.columns:
             return f"Attribute {args['attr1']} or {args['attr2']} is not found", 404
 
-        result = dp.get_noisy_count_w_condition(args['attr1'], args['attr1_val'], args['attr2'])
+        result = dp.get_noisy_count_of_attr_w_condition(args['attr1'], args['attr1_val'], args['attr2'])
 
         return result, 200
 

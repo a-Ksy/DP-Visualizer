@@ -30,6 +30,6 @@ def get_noisy_count_of_attr_w_condition(attr1_name, attr1_val, attr2_name):
     Returns the noisy count histogram of attr_2 with respect to attr_1
     """
     count_dict = db.get_count_of_attr_w_condition(attr1_name, attr1_val, attr2_name)
-    noisy_result = dp_utils.get_noisy_result(count_dict)
+    noisy_result = dp_utils.get_noisy_result(attr1_name + attr2_name, count_dict, 1)
     return noisy_result
 

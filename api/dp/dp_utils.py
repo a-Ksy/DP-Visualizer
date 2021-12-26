@@ -13,7 +13,7 @@ def _noisify_count(count_dict):
     return noisy_result
 
 
-def get_noisy_result(attr_name, count_dict):
+def get_noisy_result(attr_name, count_dict, step=100):
     result = {}
     
     noisy_result = _noisify_count(count_dict)
@@ -22,7 +22,7 @@ def get_noisy_result(attr_name, count_dict):
     for i, k in enumerate(count_dict.keys()):
         data.append([k if k != "" else "not specified", noisy_result[i]])
 
-    histogram_options = histogram_utils.generate_histogram_options(count_dict)
+    histogram_options = histogram_utils.generate_histogram_options(count_dict, step)
 
     result["data"] = data
     result["options"] = histogram_options

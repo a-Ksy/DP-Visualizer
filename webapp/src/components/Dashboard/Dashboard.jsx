@@ -4,12 +4,16 @@ import { connect } from "react-redux";
 import { Chart } from "react-google-charts";
 import { getColumns } from "../../store/data";
 import Attribute from "../Atribute/Attribute";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
-  const { histogram, columns } = props;
+  const { retrieveColumns, histogram, columns } = props;
+
+  useEffect(() => retrieveColumns(), []);
 
   const [firstColumn, setFirstColumn] = useState(null);
+  const [firstColumnVal, setFirstColumnVal] = useState(null);
+  const [secondColumn, setSecondColumn] = useState(null);
 
   if (histogram === undefined || histogram === null) {
     return (
@@ -44,6 +48,10 @@ const Dashboard = (props) => {
             type="dashboard"
             setFirstColumn={setFirstColumn}
             firstColumn={firstColumn}
+            firstColumnVal={firstColumnVal}
+            setFirstColumnVal={setFirstColumnVal}
+            secondColumn={secondColumn}
+            setSecondColumn={setSecondColumn}
           />
           <Chart
             width={"80vw"}

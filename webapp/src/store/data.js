@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { apiGetColumns, apiGetCountOfColumn, apiGetColumnValues } from "../api/api";
+import { apiGetColumns, apiGetCountOfColumn, apiGetColumnValues, apiGetCountOfColumnWithCondition } from "../api/api";
 
 export const setColumns = (payload) => ({
   type: actionTypes.SET_COLUMNS,
@@ -45,6 +45,20 @@ export const setCountOfColumn = (payload) => ({
 export const getCountOfColumn = (column) => (dispatch) => {
   return apiGetCountOfColumn(
     column,
+    (response) => {
+      dispatch(setCountOfColumn(response.data));
+      return response;
+    },
+    (err) => {
+    }
+  );
+};
+
+export const getCountOfColumnWithCondition = (column1, column1Val, column2) => (dispatch) => {
+  return apiGetCountOfColumnWithCondition(
+    column1,
+    column1Val,
+    column2,
     (response) => {
       dispatch(setCountOfColumn(response.data));
       return response;

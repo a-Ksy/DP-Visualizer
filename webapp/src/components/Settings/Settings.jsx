@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { getColumnValues, getCountOfColumn } from "../../store/data";
+import {
+  getColumnValues,
+  getCountOfColumn,
+  getCountOfColumnWithCondition,
+} from "../../store/data";
 import "./Settings.css";
 import Button from "../Button/Button";
 import { useState } from "react";
@@ -9,15 +13,35 @@ const Settings = (props) => {
   const {
     retrieveColumnValues,
     retrieveCountOfColumn,
+    retrieveCountOfColumnWithCondition,
     columns,
     columnValues,
     firstColumn,
     setFirstColumn,
+    firstColumnVal,
+    setFirstColumnVal,
+    secondColumn,
+    setSecondColumn,
   } = props;
   const [showSecondaryColumn, setShowSecondaryColumn] = useState(false);
 
   useEffect(() => retrieveCountOfColumn(firstColumn), [firstColumn]);
   useEffect(() => retrieveColumnValues(firstColumn), [firstColumn]);
+  useEffect(
+    () =>
+      retrieveCountOfColumnWithCondition(
+        firstColumn,
+        firstColumnVal,
+        secondColumn
+      ),
+    [
+      firstColumn,
+      firstColumnVal,
+      secondColumn,
+      retrieveCountOfColumnWithCondition,
+    ]
+  );
+
   let secondaryColumnOptions = null;
 
   if (showSecondaryColumn) {
@@ -30,7 +54,12 @@ const Settings = (props) => {
         <label for="columnSelection" class="form-label">
           Select a/an {firstColumn} value
         </label>
-        <select id="columnSelection" class="form-select">
+        <select
+          id="columnSelection"
+          class="form-select"
+          onChange={(e) => setFirstColumnVal(e.target.value)}
+          value={firstColumnVal}
+        >
           {columnValues?.map((column) => (
             <option value={column}>{column}</option>
           ))}
@@ -40,7 +69,12 @@ const Settings = (props) => {
         <label for="columnSelection" class="form-label">
           Select a secondary column
         </label>
-        <select id="columnSelection" class="form-select">
+        <select
+          id="columnSelection"
+          class="form-select"
+          onChange={(e) => setSecondColumn(e.target.value)}
+          value={secondColumn}
+        >
           {secondaryColumnOptions?.map((column) => (
             <option value={column}>{column}</option>
           ))}
@@ -100,6 +134,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   retrieveColumnValues: (column) => dispatch(getColumnValues(column)),
   retrieveCountOfColumn: (column) => dispatch(getCountOfColumn(column)),
+  retrieveCountOfColumnWithCondition: (column1, column1Val, column2) =>
+    dispatch(getCountOfColumnWithCondition(column1, column1Val, column2)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
