@@ -53,22 +53,26 @@ const Dashboard = (props) => {
             secondColumn={secondColumn}
             setSecondColumn={setSecondColumn}
           />
-          <Chart
-            width={"80vw"}
-            height={"60vh"}
-            chartType="Histogram"
-            loader={<div>Loading Chart</div>}
-            data={data}
-            options={{
-              hAxis: {
-                title: "Total Count",
-                ticks: options["x_ticks"],
-              },
-              vAxis: {
-                title: data[0][0],
-              },
-            }}
-          />
+          {data.length !== 0 ? (
+            <Chart
+              width={"80vw"}
+              height={"60vh"}
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+              data={data}
+              options={{
+                hAxis: {
+                  title: "Total Count",
+                  ticks: options["x_ticks"],
+                },
+                vAxis: {
+                  title: data[0][0],
+                },
+              }}
+            />
+          ) : (
+            <p>No data available for the query</p>
+          )}
         </div>
       </div>
     );

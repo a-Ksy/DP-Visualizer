@@ -2,7 +2,7 @@ import os.path
 import sqlite3
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_PATH = os.path.join(BASE_DIR, "db/medical_db.db")
+DB_PATH = os.path.join(BASE_DIR, "db/medical_db_with_age.db")
 TABLE_NAME = "data"
 
 con = sqlite3.connect(DB_PATH, check_same_thread=False)

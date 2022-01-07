@@ -5,7 +5,7 @@ BUDGET = 1
 
 def _add_laplace_noise(real_answer: list, sensitivity: float, epsilon: float):
     scale = sensitivity / epsilon
-    return [answer + np.random.laplace(scale=scale) for answer in real_answer]
+    return [int(answer + np.random.laplace(scale=scale)) for answer in real_answer]
 
 
 def _noisify_count(count_dict):
