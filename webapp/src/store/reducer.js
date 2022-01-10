@@ -13,6 +13,10 @@ const dataReducer = (state = initialState, action) => {
       return updateObject(state, { loading: true });
     case actionTypes.HIDE_LOADING:
       return updateObject(state, { loading: false });
+    case actionTypes.SET_DATABASES:
+      return updateObject(state, { databases: action.payload });
+    case actionTypes.SET_DATABASE:
+      return updateObject(state, { database: action.database });
     case actionTypes.SET_COLUMNS:
       return updateObject(state, { columns: action.payload });
     case actionTypes.SET_COLUMN_VALUES:

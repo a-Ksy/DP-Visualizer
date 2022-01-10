@@ -2,14 +2,14 @@ import Settings from "../Settings/Settings";
 import "./Dashboard.css";
 import { connect } from "react-redux";
 import { Chart } from "react-google-charts";
-import { getColumns } from "../../store/data";
+import { getDatabases, getColumns } from "../../store/data";
 import Attribute from "../Atribute/Attribute";
 import { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
-  const { retrieveColumns, histogram, columns } = props;
+  const { databases, retrieveDatabases, histogram, columns } = props;
 
-  useEffect(() => retrieveColumns(), []);
+  useEffect(() => retrieveDatabases(), []);
 
   const [firstColumn, setFirstColumn] = useState(null);
   const [firstColumnVal, setFirstColumnVal] = useState(null);
@@ -25,16 +25,33 @@ const Dashboard = (props) => {
               <span className="emphasized">differentially private</span>
             </p>
           </div>
-          <div className="row">
-            <div className="InitialSettings">
-              <p>Select a column to begin:</p>
-              <div className="row">
-                {columns?.map((column) => (
-                  <Attribute text={column} setFirstColumn={setFirstColumn} />
-                ))}
+          {columns === undefined ? (
+            <div className="row">
+              <div className="InitialSettings">
+                <p>Select a database to begin:</p>
+                <div className="row">
+                  {databases?.map((column) => (
+                    <Attribute text={column} type="db" />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="row">
+              <div className="InitialSettings">
+                <p>Select a column:</p>
+                <div className="row">
+                  {columns?.map((column) => (
+                    <Attribute
+                      text={column}
+                      setFirstColumn={setFirstColumn}
+                      type="column"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -82,10 +99,11 @@ const Dashboard = (props) => {
 const mapStateToProps = (state) => ({
   histogram: state.data.histogram,
   columns: state.data.columns,
+  databases: state.data.databases,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  retrieveColumns: () => dispatch(getColumns()),
+  retrieveDatabases: () => dispatch(getDatabases()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

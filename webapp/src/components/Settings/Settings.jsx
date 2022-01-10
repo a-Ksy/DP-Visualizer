@@ -22,19 +22,28 @@ const Settings = (props) => {
     setFirstColumnVal,
     secondColumn,
     setSecondColumn,
+    dbName,
   } = props;
   const [showSecondaryColumn, setShowSecondaryColumn] = useState(false);
 
-  useEffect(() => retrieveCountOfColumn(firstColumn), [firstColumn]);
-  useEffect(() => retrieveColumnValues(firstColumn), [firstColumn]);
+  useEffect(
+    () => retrieveCountOfColumn(dbName, firstColumn),
+    [dbName, firstColumn]
+  );
+  useEffect(
+    () => retrieveColumnValues(dbName, firstColumn),
+    [dbName, firstColumn]
+  );
   useEffect(
     () =>
       retrieveCountOfColumnWithCondition(
+        dbName,
         firstColumn,
         firstColumnVal,
         secondColumn
       ),
     [
+      dbName,
       firstColumn,
       firstColumnVal,
       secondColumn,
@@ -129,13 +138,18 @@ const Settings = (props) => {
 const mapStateToProps = (state) => ({
   columns: state.data.columns,
   columnValues: state.data.columnValues,
+  dbName: state.data.database,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  retrieveColumnValues: (column) => dispatch(getColumnValues(column)),
-  retrieveCountOfColumn: (column) => dispatch(getCountOfColumn(column)),
-  retrieveCountOfColumnWithCondition: (column1, column1Val, column2) =>
-    dispatch(getCountOfColumnWithCondition(column1, column1Val, column2)),
+  retrieveColumnValues: (dbName, column) =>
+    dispatch(getColumnValues(dbName, column)),
+  retrieveCountOfColumn: (dbName, column) =>
+    dispatch(getCountOfColumn(dbName, column)),
+  retrieveCountOfColumnWithCondition: (dbName, column1, column1Val, column2) =>
+    dispatch(
+      getCountOfColumnWithCondition(dbName, column1, column1Val, column2)
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

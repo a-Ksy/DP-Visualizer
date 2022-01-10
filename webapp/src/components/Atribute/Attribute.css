@@ -10,3 +10,7 @@
   width: fit-content;
   cursor: pointer;
 }
+
+.Attribute.db {
+  background-color: #e45858;
+}

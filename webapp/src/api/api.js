@@ -1,8 +1,9 @@
 import { BASE_URL, apiCall, methods } from "../utils/apiCall";
 
-export const apiGetColumns = async (callback, onError) => {
+
+export const apiGetDatabases = async (callback, onError) => {
   return apiCall(
-    `${BASE_URL}/columns`,
+    `${BASE_URL}/databases`,
     methods.GET,
     null,
     null,
@@ -12,8 +13,22 @@ export const apiGetColumns = async (callback, onError) => {
   );
 };
 
-export const apiGetCountOfColumn = async (column, callback, onError) => {
-  const params = { attr: column };
+export const apiGetColumns = async (dbName, callback, onError) => {
+  const params = {db_name: dbName};
+  
+  return apiCall(
+    `${BASE_URL}/columns`,
+    methods.GET,
+    params,
+    null,
+    null,
+    callback,
+    onError
+  );
+};
+
+export const apiGetCountOfColumn = async (dbName, column, callback, onError) => {
+  const params = { db_name: dbName, attr: column };
 
   return apiCall(
     `${BASE_URL}/count`,
@@ -26,8 +41,8 @@ export const apiGetCountOfColumn = async (column, callback, onError) => {
   );
 };
 
-export const apiGetColumnValues = async (column, callback, onError) => {
-  const params = { attr: column };
+export const apiGetColumnValues = async (dbName, column, callback, onError) => {
+  const params = { db_name: dbName, attr: column };
 
   return apiCall(
     `${BASE_URL}/columnValues`,
@@ -40,8 +55,8 @@ export const apiGetColumnValues = async (column, callback, onError) => {
   );
 };
 
-export const apiGetCountOfColumnWithCondition = async (column1, column1Val, column2, callback, onError) => {
-  const params = { attr1: column1, attr1_val: column1Val, attr2: column2};
+export const apiGetCountOfColumnWithCondition = async (dbName, column1, column1Val, column2, callback, onError) => {
+  const params = { db_name: dbName, attr1: column1, attr1_val: column1Val, attr2: column2};
 
   return apiCall(
     `${BASE_URL}/countWithCondition`,
